@@ -11,7 +11,7 @@ vultr-api是一个非官方的vultr.com API客户端类库，提供了一个友�
 # 使用
 以获取服务器列表的API-"/v1/server/list"为例进行说明：
 
-    from vultr import Vultr
+    from vultrapi import Vultr
     api_key = API_KEY
     vultr = Vultr(api_key)
     #不带参数调用

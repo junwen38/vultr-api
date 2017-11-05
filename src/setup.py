@@ -11,6 +11,6 @@ setup(
     description="Vultr.com API Client",
     author="junwen38",
     author_email="junwen38@gmail.com",
-    py_modules=["vultr"],
+    packages=["vultrapi"],
     install_requires=["requests"]
     )
