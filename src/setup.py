@@ -7,7 +7,7 @@ from distutils.core import setup
 
 setup(
     name="vultr-api",
-    version="1.0",
+    version="1.0.1",
     description="Vultr.com API Client",
     author="junwen38",
     author_email="junwen38@gmail.com",
