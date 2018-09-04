@@ -12,9 +12,9 @@ def api_info_initial():
     import re
     global api_info
     res = get("https://www.vultr.com/api/")
-    html = res.text;
+    html = res.text
     methods = (m.group(1) for m in re.finditer(r"<td>(POST|GET)</td>", html))
-    names = (m.group(1) for m in re.finditer(r"<h3>/v1/(.*?)</h3>", html))
+    names = (m.group(1) for m in re.finditer(r"<li><a href=\"#.*\">/v1/(.*?)</a></li>", html))
     api_info = dict(zip(names, methods))
     
 class __RPC:
