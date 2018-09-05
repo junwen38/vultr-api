@@ -5,17 +5,20 @@ Created on 2017年10月28日
 '''
 from requests.exceptions import HTTPError
 
-api_info = None
+__api_info = None
 
-def api_info_initial():
-    from requests import get
-    import re
-    global api_info
-    res = get("https://www.vultr.com/api/")
-    html = res.text
-    methods = (m.group(1) for m in re.finditer(r"<td>(POST|GET)</td>", html))
-    names = (m.group(1) for m in re.finditer(r"<li><a href=\"#.*\">/v1/(.*?)</a></li>", html))
-    api_info = dict(zip(names, methods))
+def api_info_initial(api_info = None):
+    if not api_info:
+        from requests import get
+        import re
+        global __api_info
+        res = get("https://www.vultr.com/api/")
+        html = res.text
+        methods = (m.group(1) for m in re.finditer(r"<td>(POST|GET)</td>", html))
+        names = (m.group(1) for m in re.finditer(r"<li><a href=\"#.*\">/v1/(.*?)</a></li>", html))
+        __api_info = dict(zip(names, methods))
+    else:
+        __api_info = api_info
     
 class __RPC:
     def __init__(self, api_key, name):
@@ -28,8 +31,10 @@ class __RPC:
     def __call__(self, **kwargs):
         import requests
         
+        api_info = eval("__api_info")
         if (not api_info):
             api_info_initial()
+            api_info = eval("__api_info")
         if (self.name not in api_info):
             raise ValueError("The API is not exists.")
         
